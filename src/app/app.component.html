@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <title>{{ title }}</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">{{ title }}</a>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class=' col-md-6'>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th style="border: 0px;">Nome Completo</th>
+              <th style="border: 0px;">CPF</th>
+              <th style="border: 0px;">Data Nascimento</th>
+              <th style="border: 0px;">Endereço Completo</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let cliente of clientes; let i = index" [attr.data-index]="i">
+              <td>{{cliente.dadosPessoais.nome}} {{cliente.dadosPessoais.sobrenome}}</td>
+              <td>{{cliente.dadosPessoais.cpf}}</td>
+              <td>{{cliente.dadosPessoais.dataNascimento}}</td>
+              <td>{{cliente.endereco.endereco}}, {{cliente.endereco.numero}} / {{cliente.endereco.complemento}} -
+                {{cliente.endereco.cidade}}/{{cliente.endereco.estado}} -
+                {{cliente.endereco.cep}}</td>
+
+              <td>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalExcluir"
+                  (click)="excluirCliente(i)">Excluir</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class=' col-md-6'>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="control-label col-sm-2">Nome</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Nome..." [(ngModel)]="novoCliente.dadosPessoais.nome"
+                [ngModelOptions]="{standalone: true}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Sobrenome</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Sobrenome..."
+                [(ngModel)]="novoCliente.dadosPessoais.sobrenome" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">CPF</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="CPF..." [(ngModel)]="novoCliente.dadosPessoais.cpf" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Data de Nascimento </label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" placeholder="Data..."
+                [(ngModel)]="novoCliente.dadosPessoais.dataNascimento" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">CEP</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="CEP..." [(ngModel)]="novoCliente.endereco.cep" [ngModelOptions]="{standalone: true}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Endereço</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Endereço..."
+                [(ngModel)]="novoCliente.endereco.endereco" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Número</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" placeholder="Número..."
+                [(ngModel)]="novoCliente.endereco.numero" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Complemento</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Complemento..."
+                [(ngModel)]="novoCliente.endereco.complemento" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Cidade</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Cidade..." [(ngModel)]="novoCliente.endereco.cidade" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2">Estado</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Estado..." [(ngModel)]="novoCliente.endereco.estado" [ngModelOptions]="{standalone: true}"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary" (click)="salvar(novoCliente)">Cadastrar </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
